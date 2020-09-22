@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Lina K. Mühlbauer, Maximilienne Schulze, and Adam T. Clark" />
+
+
+<title>Example Analyses in gauseR</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Example Analyses in gauseR</h1>
+<h4 class="author">Lina K. Mühlbauer, Maximilienne Schulze, and Adam T. Clark</h4>
+<h4 class="date">4/1/2020</h4>
+
+
+
+<div id="the-gauser-package" class="section level2">
+<h2>The GauseR package</h2>
+<p>The GauseR package includes tools and data for analyzing the Gause microcosm experiments, and for fitting Lotka-Volterra models to time series data.</p>
+<p>Below, we will demonstrate some of the basic features of this package, including several optimization methods, a function for calculating the goodness of fit for models, and an automated wrapper function. Note that the general methods applied here, as well as the form of the differential equations that we use, are described in detail in the Quantitative Ecology textbook by Lehman et al., available at <a href="http://hdl.handle.net/11299/204551" class="uri">http://hdl.handle.net/11299/204551</a>. The full R package, and accompanying documentation, is available at <a href="https://github.com/adamtclark/gauseR" class="uri">https://github.com/adamtclark/gauseR</a>.</p>
+</div>
+<div id="linearized-estimates" class="section level2">
+<h2>Linearized estimates</h2>
+<p>As a first example, we will use data from Gause’s experiments with Paramecium. The plotted data in the figure below shows the logistic growth of <em>Paramecium aurelia</em> in monoculture.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># load package</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">require</span>(gauseR)</span></code></pre></div>
+<pre><code>## Loading required package: gauseR</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># load data</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">data</span>(gause_<span class="dv">1934</span>_book_f22)</span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a>logistic_data&lt;-gause_<span class="dv">1934</span>_book_f22[gause_<span class="dv">1934</span>_book_f22<span class="op">$</span>Treatment<span class="op">==</span><span class="st">&quot;Pa&quot;</span>,]</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="kw">plot</span>(Volume_Species2<span class="op">~</span>Day, logistic_data)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAVFBMVEUAAAAAADoAAGYAOpAAZrY6AAA6ADo6AGY6Ojo6OpA6kNtmAABmADpmtv+QOgCQOjqQ27aQ2/+2ZgC225C2///bkDrb////tmb/25D//7b//9v///97PSwWAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAI0ElEQVR4nO2dC3ejKBiGbdrszjadzDZbay7//3+ugCaaI7zcQfs+58y0MyWgT+XjImhzI0aa0gdQOxQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIMApqm6b5Lb/ZfRU8nPoYBLUvn7fL4e1GQc8oQdfju/z79ZuCnlCCLgdZvW6n128KmjO9gnpObxQ0Z4xBg5bLoaGgGY9WTFWy65GCZrAfBIgsqFkN7oIuh3fRXexb+hBBIR+eZWR/Cn75uyfsm/jz/q1vx7KUa5FPUkPugkRXqOsjdRcUpCOdVBMzM0MJLgmFoFMvJ6wflEhQ/ArnU8XeLofXbzUgS1+uTTbN9J9OOWOhXkG6efm8HoP8xBAkT26mxLnCWQj1EBSF8OyGk5teA66CbNKvVtDSydUiqK9jr9+nd1Pq61H1srSBPIkgY5VZCDeJBHUvn60I0gZDbTP8sGs0qdIIerLwXP0WDUWPQWLGozVPmN0nRW4yZVC5xgPCv/xm8v2SoQStmOgHidM2dBTHabUeXapYrZjp59OCvHuU/lfQST8Yy3IFQUoJGmLQOC+0yP2H6WIQZu7Ed9Dm2Yo1fV/RlFomaQxD/hzTS3MnnqOQ1faDrAqJMDJbo6Cl8042LZRIUMqO4lI0MUaYIHmOgvru4RheTHc1UnYUnccYvuF5mnXMhLfEzbyrIO8GfvrxmAlvpo6i+1y45kCqFiS6iNq6I0jbUXSMQfkFqS60cUYxbUfRsRXLHYPG+mOctK+io3gvK2MrdnvUnyom7dPjUcVU/TnvjTNm0cotjU+QPu/hWAwu1Nu0IAxeqPezBVks1Nu0IDhpb7FQb8uC8KS9xUK9DQuymLS3WKi3YUEWk/YWC/U2LMhi0j5muaVJM2kfsdzZhxKvJlss0yOhxaR9vHKfPpPd0IrmpAPnLTyhIKtS3RLKKha2yHXTgjoZftqwILThGHQ93scROcqdfWgVrdjlQ106VSwDTo//FaSbjjfnEn5XIzM+MUh2EUt0FEvgMxZ7XAb+tWzDgjKXWxoKAjgLknczuiJjsSK4Cjrvf6swLb/JUK5KXa7VcxUkd4mJzT4594sV6UJPynZIKGei1UaWfB3FMoOwWeHWCeX9CjVfT0FLCaUgFX6MPemoS/DWJEhGHjmQN24Yi7wEb0UxSMx1iP2GQ6DWEH0B1YpaMdEF6s/5vDdVsDx7NfKQ8N68pOBejTgECbr+0XSnq9irEYc0gupaghdEIkHxyi1N5YLKTz0mEhSpo1iyAzQ5BO+EhiAdpaNYtAs9OwbPhDpBsZr5zQqKtVdjs4KidRTXHoO0ROsorrMVs3g0xY/uKFo8miJiuaXxufWMV7lGLLc0PndWLVa5xiu3NP5XEFe56hLiVa4Wt++3LMhilSt+0Csst3wDr0h0bx4+Aw5lV0EXUZFq8UIHlg+B7GoYZCg8BI0RJmUrtmZBcp9c6nLXLGgyVE9Y7opj0GSonrLcFbdi57/C1k65lVsaH0H79EG6HnyqWNhjbh3LLU2tQboaqg3StcAgDfCpYsHL7F3KLU2qsZgul5+wmSVvuaVhFQN4X0FhU9KGciurfv5VLNFK+2pGqQP+gtLc1ahnnmPAX1Ca+2LbEZTozSwbEARvu4eVu50YlKrczbRimcotDQUBHAXF2RPuUm5pariCKos6cyoQVFu7NcdHkMWzXB2yq67nM8dn+YtcmBnj2R3N+I65TQm6P086eAGV+rM5QVZPJLfJbjSztRhkdQXZbGa5Xzpba8UsYpDVZpbK69ZAklbMcitC3XVrIEk/yHYzS9V1a8B5qGHTuP/gXc9iLGYxUWaxmWU1uAlS7RPuRYfMquFDqiWFLrk4+xgLGHBJlacwJO8CZzvsS6o5hTl54J1Dh5KqTWFI3gU/Dti2pJpT6JIzBpmS27ViIdRy+l6CLPtBQdRy+p6CYqzgtClpDSlCkv88KAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQECCPIHU3xDChcv5bTvQa3luhUmgzkqsG3k153FPAg5mRRxDazXg5yJlw8YqzbtnQkEKX0fXYf6wVZ63L45HCbWtlHkHgTsBwM0XduV3cTTPebtFlNDyPf/elzeOewvG2RB5BrfGC7pp3edCPc9ClQBm9fOrzGFOAPJ7JI+j0qzHfEFCC5LWv+QWr/zZndNp9GfNQj+yHBzMji6DhfQKGg5JnpEKHJgjJFOaMxIoBYx4yBT6YGRmbeVPdtxRkzKgbY7Q+j0fbZR2IMgoyvVfJtooZMlIrTkx5TNekWL/kKacgQ/MKgvRtLmgpo2F5oCGPdhp4rNv6LILUUcMqZmjmZwqXMnq86F2Xx5gCH8yMTK2YfDsXCtKmjuLYimkyku+PU+k0eTxSwIOZkamKnfqW1VTph19oqx9qDCk0GbVqYZf4sCaPSQp0MDM4WAVQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAhAQQAKAlAQgIIAFASgIAAFASgIQEEACgJQEICCAJUKOqk76em3GkNqFSQfAHHep96rjqlakHYtTEbqFqReWTUsV5HretzW8EagbkHyqxDTimVRu6/eWO6wVLmgdvd1+fhU6+bE4yGivKHJifoFiS/dWMfCHqTqQ+WCxNe2aXb/iZWXfR2zXloYjboFiSAtV6XKvy4f/35kb9XqFtQNsVm9Qvl6/JW9htUtSC7dVfF5eNBs9hpWraDJUEOu6z2JLmP+NqxaQcuc/8lew9YlqM1fw9Yk6LzPH6JXJagMFASgIAAFASgIQEEACgJQEICCABQEoCAABQEoCEBBAAoCUBCAggAUBKAgAAUBKAjwP9BkbCANUO17AAAAAElFTkSuQmCC" /><!-- --></p>
+<p>We will use this observed data to fit a linear regression to the data points. This is necessary to extract the parameters needed for the following analysis. Therefore, we will proceed in three steps. First, we generate time-lagged data with get_lag and use this data to calculate the per capita growth rate with percap_growth. In a final step we plot the per capita growth rate against the abundance and fit the linear model to the relationship.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># calculate time-lagged abundance</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>lagged_data&lt;-<span class="kw">get_lag</span>(<span class="dt">x=</span>logistic_data<span class="op">$</span>Volume_Species2, <span class="dt">time =</span> logistic_data<span class="op">$</span>Day)</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># calculate per-capita growth rate</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>lagged_data<span class="op">$</span>dNNdt &lt;-<span class="st"> </span><span class="kw">percap_growth</span>(<span class="dt">x =</span> lagged_data<span class="op">$</span>x, <span class="dt">laggedx =</span> lagged_data<span class="op">$</span>laggedx, <span class="dt">dt =</span> lagged_data<span class="op">$</span>dt)</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co"># plot relationship</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw">plot</span>(dNNdt<span class="op">~</span>laggedx, lagged_data,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>     <span class="dt">xlab=</span><span class="st">&quot;Lagged Abundance (N)&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>     <span class="dt">ylab=</span><span class="st">&quot;Per-capita Growth Rate (dN/Ndt)&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11"></a>     <span class="dt">xlim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">250</span>), <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">v=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">3</span>)</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># fit model to relationship</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>mod&lt;-<span class="kw">lm</span>(dNNdt<span class="op">~</span>laggedx, lagged_data)</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="kw">abline</span>(mod, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb4-17"><a href="#cb4-17"></a></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># label parameters</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="kw">arrows</span>(<span class="dv">25</span>, <span class="fl">0.6</span>, <span class="dv">1</span>, <span class="fl">0.8</span>, <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">lwd=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="kw">text</span>(<span class="dv">25</span>, <span class="fl">0.6</span>, <span class="st">&quot;y-intercept: r&quot;</span>, <span class="dt">pos=</span><span class="dv">1</span>)</span>
+<span id="cb4-21"><a href="#cb4-21"></a></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="kw">arrows</span>(<span class="dv">200</span>, <span class="fl">0.4</span>, <span class="dv">232</span>, <span class="fl">0.01</span>, <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">lwd=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="kw">text</span>(<span class="dv">200</span>, <span class="fl">0.4</span>, <span class="st">&quot;x-intercept: K&quot;</span>, <span class="dt">pos=</span><span class="dv">3</span>)</span>
+<span id="cb4-24"><a href="#cb4-24"></a></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="kw">arrows</span>(<span class="dv">80</span>, <span class="kw">predict</span>(mod, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">laggedx=</span><span class="dv">80</span>)),</span>
+<span id="cb4-26"><a href="#cb4-26"></a>         <span class="dv">130</span>, <span class="kw">predict</span>(mod, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">laggedx=</span><span class="dv">80</span>)),</span>
+<span id="cb4-27"><a href="#cb4-27"></a>         <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">lwd=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="kw">arrows</span>(<span class="dv">130</span>, <span class="kw">predict</span>(mod, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">laggedx=</span><span class="dv">80</span>)),</span>
+<span id="cb4-29"><a href="#cb4-29"></a>       <span class="dv">130</span>, <span class="kw">predict</span>(mod, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">laggedx=</span><span class="dv">130</span>)),</span>
+<span id="cb4-30"><a href="#cb4-30"></a>       <span class="dt">length =</span> <span class="fl">0.1</span>, <span class="dt">lwd=</span><span class="fl">1.5</span>)</span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="kw">text</span>(<span class="dv">130</span>, <span class="kw">predict</span>(mod, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">laggedx=</span><span class="dv">80</span>)), <span class="st">&quot;slope: aii&quot;</span>, <span class="dt">pos=</span><span class="dv">3</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Recall that per-capita growth rate (i.e. growth rate divided by population size) for the logistic growth model follows the form:</p>
+<p><span class="math display">\[ \frac{\mathrm{d}N}{\mathrm{d}t} / N = r - a_{ii} N \]</span></p>
+<p>where <span class="math inline">\(r\)</span> is the intrinsic growth rate, and <span class="math inline">\(a_{ii}\)</span> is the strength of self-limitation. Note that we can read the parameters for this equation off of the figure and regression below. Here, <span class="math inline">\(r\)</span> is the y-intercept, <span class="math inline">\(a_{ii}\)</span> is the slope of the line, and the carrying capacity <span class="math inline">\(K\)</span> is the x-intercept (which can be calculated as <span class="math inline">\(-r/a_{ii}\)</span>).</p>
+<p>Finally, we can compare the model estimates to the data. Because this is a model of only one species, we can make model predictions using the get_logistic function, plus the paramter estimates from the regression that we just fit.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">plot</span>(Volume_Species2<span class="op">~</span>Day, logistic_data, <span class="dt">xlab=</span><span class="st">&quot;Day&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;P. aurelia Std. Volume&quot;</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>timelst&lt;-<span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="dt">by=</span><span class="fl">0.1</span>) <span class="co"># sequence of time values to plot</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>prediction&lt;-<span class="kw">get_logistic</span>(<span class="dt">time =</span> timelst, <span class="dt">N0 =</span> <span class="fl">0.6</span>, <span class="dt">r =</span> <span class="fl">0.8</span>, <span class="dt">K=</span><span class="dv">230</span>)</span>
+<span id="cb5-5"><a href="#cb5-5"></a></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">lines</span>(timelst, prediction, <span class="dt">lwd=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Look at how the line closely matches the points - this suggests that the model matches the data closely. One slight problem here is that we needed to make up a number for N0 - i.e. the initial abundance at the beginning of the experiment. For this example, we simply tried out different estimates until the model seemed to fit the data well. But, in the examples below, we will show how to achieve this a bit more elegantly using an optimizer.</p>
+</div>
+<div id="goodness-of-fit" class="section level2">
+<h2>Goodness of fit</h2>
+<p>In many cases, we might want to be able to quantify goodness of fit, rather than just looking at a figure and testing the fit by eye. We can use the test_goodness_of_fit function to generate an R-squared-like value, based on the difference between observed and predicted lines. This value is like a classic R-squared statistic, but instead of tracking distance from a regression line, it tracks the distance of predicted points from the “1-1” line (i.e. where they perfectly fit observations). Values close to 1 indicate a good fit, whereas values at or below zero indicate a poor fit. Note that values less than zero suggest that predictions are a worse estimate than is the average value observed across observations, which is often considered the minimum threshold for a meaningful model.</p>
+<p>Note that we need to make a new set of predictions for these tests, so that only one prediction per observed time point is made.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>prediction_short&lt;-<span class="kw">get_logistic</span>(<span class="dt">time =</span> logistic_data<span class="op">$</span>Day, <span class="dt">N0 =</span> <span class="fl">0.6</span>, <span class="dt">r =</span> <span class="fl">0.8</span>, <span class="dt">K=</span><span class="dv">230</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">test_goodness_of_fit</span>(<span class="dt">observed =</span> logistic_data<span class="op">$</span>Volume_Species2, <span class="dt">predicted =</span> prediction_short)</span></code></pre></div>
+<pre><code>## [1] 0.9715139</code></pre>
+<p>Here, the goodness of fit is around 97%, which indicates that the model fits the data very closely.</p>
+</div>
+<div id="the-optimizer" class="section level2">
+<h2>The optimizer</h2>
+<p>As an example for using the optimizer, we use another data set of Gause’s Paramecium experiments. This predator-prey experiment shows the interaction between <em>Didinium nasutum</em> and <em>P. caudatum</em>. First, we can try to fit the model using the same three step process described above.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># load data from competition experiment</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">data</span>(gause_<span class="dv">1934</span>_book_f32)</span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># keep all data - no separate treatments exist for this experiment</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>predatorpreydata&lt;-gause_<span class="dv">1934</span>_book_f32</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># get time-lagged observations for each species</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>prey_lagged&lt;-<span class="kw">get_lag</span>(<span class="dt">x =</span> predatorpreydata<span class="op">$</span>Individuals_Prey, <span class="dt">time =</span> predatorpreydata<span class="op">$</span>Day)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>predator_lagged&lt;-<span class="kw">get_lag</span>(<span class="dt">x =</span> predatorpreydata<span class="op">$</span>Individuals_Predator, <span class="dt">time =</span> predatorpreydata<span class="op">$</span>Day)</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co"># calculate per-capita growth rates</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>prey_dNNdt&lt;-<span class="kw">percap_growth</span>(<span class="dt">x =</span> prey_lagged<span class="op">$</span>x, <span class="dt">laggedx =</span> prey_lagged<span class="op">$</span>laggedx, <span class="dt">dt =</span> prey_lagged<span class="op">$</span>dt)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>predator_dNNdt&lt;-<span class="kw">percap_growth</span>(<span class="dt">x =</span> predator_lagged<span class="op">$</span>x,</span>
+<span id="cb8-14"><a href="#cb8-14"></a>      <span class="dt">laggedx =</span> predator_lagged<span class="op">$</span>laggedx, <span class="dt">dt =</span> predator_lagged<span class="op">$</span>dt)</span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co"># fit linear models to dNNdt, based on average</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># abundances between current and lagged time steps</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>prey_mod_dat&lt;-<span class="kw">data.frame</span>(<span class="dt">prey_dNNdt=</span>prey_dNNdt, <span class="dt">prey=</span>prey_lagged<span class="op">$</span>laggedx,</span>
+<span id="cb8-19"><a href="#cb8-19"></a>      <span class="dt">predator=</span>predator_lagged<span class="op">$</span>laggedx)</span>
+<span id="cb8-20"><a href="#cb8-20"></a>mod_prey&lt;-<span class="kw">lm</span>(prey_dNNdt<span class="op">~</span>prey<span class="op">+</span>predator, <span class="dt">data=</span>prey_mod_dat)</span>
+<span id="cb8-21"><a href="#cb8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22"></a>predator_mod_dat&lt;-<span class="kw">data.frame</span>(<span class="dt">predator_dNNdt=</span>predator_dNNdt,</span>
+<span id="cb8-23"><a href="#cb8-23"></a>      <span class="dt">predator=</span>predator_lagged<span class="op">$</span>laggedx, <span class="dt">prey=</span>prey_lagged<span class="op">$</span>laggedx)</span>
+<span id="cb8-24"><a href="#cb8-24"></a>mod_predator&lt;-<span class="kw">lm</span>(predator_dNNdt<span class="op">~</span>predator<span class="op">+</span>prey, <span class="dt">data=</span>predator_mod_dat)</span>
+<span id="cb8-25"><a href="#cb8-25"></a></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co"># model summaries</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="kw">summary</span>(mod_prey)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = prey_dNNdt ~ prey + predator, data = prey_mod_dat)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.44938 -0.18313 -0.09181  0.61768  0.75852 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)  0.99795    0.29658   3.365  0.00718 **
+## prey        -0.02061    0.01255  -1.642  0.13154   
+## predator    -0.06758    0.01831  -3.690  0.00417 **
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6755 on 10 degrees of freedom
+##   (4 observations deleted due to missingness)
+## Multiple R-squared:  0.6355, Adjusted R-squared:  0.5626 
+## F-statistic: 8.717 on 2 and 10 DF,  p-value: 0.006436</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">summary</span>(mod_predator)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = predator_dNNdt ~ predator + prey, data = predator_mod_dat)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.6943 -0.3762 -0.1436  0.2799  1.3008 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) -0.06931    0.53816  -0.129   0.9011  
+## predator    -0.02602    0.01965  -1.324   0.2271  
+## prey         0.03895    0.01324   2.943   0.0216 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6432 on 7 degrees of freedom
+##   (7 observations deleted due to missingness)
+## Multiple R-squared:  0.7039, Adjusted R-squared:  0.6194 
+## F-statistic: 8.322 on 2 and 7 DF,  p-value: 0.01412</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># extract parameters</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co"># growth rates</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>r1 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_prey)[<span class="st">&quot;(Intercept)&quot;</span>])</span>
+<span id="cb12-4"><a href="#cb12-4"></a>r2 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_predator)[<span class="st">&quot;(Intercept)&quot;</span>])</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># self-limitation</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>a11 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_prey)[<span class="st">&quot;prey&quot;</span>])</span>
+<span id="cb12-8"><a href="#cb12-8"></a>a22 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_predator)[<span class="st">&quot;predator&quot;</span>])</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co"># effect of Pa on Pc</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>a12 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_prey)[<span class="st">&quot;predator&quot;</span>])</span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="co"># effect of Pc on Pa</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>a21 &lt;-<span class="st"> </span><span class="kw">unname</span>(<span class="kw">coef</span>(mod_predator)[<span class="st">&quot;prey&quot;</span>])</span>
+<span id="cb12-14"><a href="#cb12-14"></a></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co"># run ODE:</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co"># make parameter vector:</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>parms &lt;-<span class="st"> </span><span class="kw">c</span>(r1, r2, a11, a12, a21, a22)</span>
+<span id="cb12-18"><a href="#cb12-18"></a>initialN &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">4</span>, <span class="fl">0.1</span>)</span>
+<span id="cb12-19"><a href="#cb12-19"></a>out &lt;-<span class="st"> </span>deSolve<span class="op">::</span><span class="kw">ode</span>(<span class="dt">y=</span>initialN, <span class="dt">times=</span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">17</span>, <span class="dt">length=</span><span class="dv">100</span>), <span class="dt">func=</span>lv_interaction, <span class="dt">parms=</span>parms)</span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="kw">matplot</span>(out[,<span class="dv">1</span>], out[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb12-21"><a href="#cb12-21"></a>        <span class="dt">xlab=</span><span class="st">&quot;time&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;N&quot;</span>, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;red&quot;</span>), <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">60</span>))</span>
+<span id="cb12-22"><a href="#cb12-22"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Pc&quot;</span>, <span class="st">&quot;Dn&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co"># now, plot in points from data</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a><span class="kw">points</span>(predatorpreydata<span class="op">$</span>Day, predatorpreydata<span class="op">$</span>Individuals_Predator , <span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb12-26"><a href="#cb12-26"></a><span class="kw">points</span>(predatorpreydata<span class="op">$</span>Day, predatorpreydata<span class="op">$</span>Individuals_Prey, <span class="dt">col=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Sadly, it seems that the model doesn’t fit very well in this case. The reason turns out not to be because the model itself is bad, but rather because the method that we are using for estimating parameters is subject to high error.</p>
+<p>One way to get around this problem is to use an optimizer to directly fit the predicted dynamics to the observed data. We can do this using the lv_optim function. Note that things get a bit complicated, because we need to set the sign of the parameters (i.e. positive or negative) before we conduct the analysis. This is because a model with too many positive coefficients will lead to unbounded growth, which will ultimately crash the optimizer. For this analysis, we simply take the signs for the parameters from the estimate that we got above from the linear regressions.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Data for the optimizer:</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Must have a column with time steps labeled &#39;time&#39;, and</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># columns for each species in the community.</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>opt_data&lt;-<span class="kw">data.frame</span>(<span class="dt">time=</span>predatorpreydata<span class="op">$</span>Day, <span class="dt">Prey=</span>predatorpreydata<span class="op">$</span>Individuals_Prey,</span>
+<span id="cb13-5"><a href="#cb13-5"></a>    <span class="dt">Predator=</span>predatorpreydata<span class="op">$</span>Individuals_Predator)</span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co"># Save the signs of the parameters -</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co"># optimizer works in log space, so these</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="co"># must be specified separately</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>parm_signs&lt;-<span class="kw">sign</span>(parms)</span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co"># parameter vector for optimizer -</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="co"># must be a vector with, first, the</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a><span class="co"># starting abundances in log space,</span></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="co"># and second, the parameter values,</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="co"># again in log space</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a>pars&lt;-<span class="kw">c</span>(<span class="kw">log</span>(initialN), <span class="kw">log</span>(<span class="kw">abs</span>(parms)))</span>
+<span id="cb13-18"><a href="#cb13-18"></a></span>
+<span id="cb13-19"><a href="#cb13-19"></a><span class="co"># run optimizer</span></span>
+<span id="cb13-20"><a href="#cb13-20"></a>optout&lt;-<span class="kw">optim</span>(<span class="dt">par =</span> pars, <span class="dt">fn =</span> lv_optim, <span class="dt">hessian =</span> <span class="ot">TRUE</span>,</span>
+<span id="cb13-21"><a href="#cb13-21"></a>             <span class="dt">opt_data=</span>opt_data, <span class="dt">parm_signs=</span>parm_signs)</span>
+<span id="cb13-22"><a href="#cb13-22"></a></span>
+<span id="cb13-23"><a href="#cb13-23"></a><span class="co"># extract parameter vector:</span></span>
+<span id="cb13-24"><a href="#cb13-24"></a>parms &lt;-<span class="st"> </span><span class="kw">exp</span>(optout<span class="op">$</span>par[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)])<span class="op">*</span>parm_signs</span>
+<span id="cb13-25"><a href="#cb13-25"></a>initialN &lt;-<span class="st"> </span><span class="kw">exp</span>(optout<span class="op">$</span>par[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>])</span>
+<span id="cb13-26"><a href="#cb13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27"></a>out &lt;-<span class="st"> </span>deSolve<span class="op">::</span><span class="kw">ode</span>(<span class="dt">y=</span>initialN, <span class="dt">times=</span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">17</span>, <span class="dt">length=</span><span class="dv">100</span>), <span class="dt">func=</span>lv_interaction, <span class="dt">parms=</span>parms)</span>
+<span id="cb13-28"><a href="#cb13-28"></a><span class="kw">matplot</span>(out[,<span class="dv">1</span>], out[,<span class="op">-</span><span class="dv">1</span>], <span class="dt">type=</span><span class="st">&quot;l&quot;</span>,</span>
+<span id="cb13-29"><a href="#cb13-29"></a>        <span class="dt">xlab=</span><span class="st">&quot;time&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;N&quot;</span>, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>,<span class="st">&quot;red&quot;</span>), <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">60</span>))</span>
+<span id="cb13-30"><a href="#cb13-30"></a><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Pc&quot;</span>, <span class="st">&quot;Dn&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb13-31"><a href="#cb13-31"></a></span>
+<span id="cb13-32"><a href="#cb13-32"></a><span class="co"># now, plot in points from data</span></span>
+<span id="cb13-33"><a href="#cb13-33"></a><span class="kw">points</span>(predatorpreydata<span class="op">$</span>Day, predatorpreydata<span class="op">$</span>Individuals_Predator , <span class="dt">col=</span><span class="dv">2</span>)</span>
+<span id="cb13-34"><a href="#cb13-34"></a><span class="kw">points</span>(predatorpreydata<span class="op">$</span>Day, predatorpreydata<span class="op">$</span>Individuals_Prey, <span class="dt">col=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>This process is a little complicated, but it seems to fit the data much better.</p>
+</div>
+<div id="the-wrapper-function" class="section level2">
+<h2>The wrapper function</h2>
+<p>Finally, let’s try a simpler example, tracking competitive interactions between <em>P. aurelia</em> and <em>P. caudatum</em>. Rather than going through all the coding involved in fitting the linear models and running the optimizer, we can simply run the gause_wrapper function, which automates all of these steps.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#load competition data</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="kw">data</span>(<span class="st">&quot;gause_1934_science_f02_03&quot;</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">#subset out data from species grown in mixture</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>mixturedat&lt;-gause_<span class="dv">1934</span>_science_f02_<span class="dv">03</span>[gause_<span class="dv">1934</span>_science_f02_<span class="dv">03</span><span class="op">$</span>Treatment<span class="op">==</span><span class="st">&quot;Mixture&quot;</span>,]</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#extract time and species data</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>time&lt;-mixturedat<span class="op">$</span>Day</span>
+<span id="cb14-9"><a href="#cb14-9"></a>species&lt;-<span class="kw">data.frame</span>(mixturedat<span class="op">$</span>Volume_Species1, mixturedat<span class="op">$</span>Volume_Species2)</span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="kw">colnames</span>(species)&lt;-<span class="kw">c</span>(<span class="st">&quot;P_caudatum&quot;</span>, <span class="st">&quot;P_aurelia&quot;</span>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="co">#run wrapper</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>gause_out&lt;-<span class="kw">gause_wrapper</span>(<span class="dt">time=</span>time, <span class="dt">species=</span>species)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<p>Again, this yields a close fit between observations and model predictions.</p>
+</div>
+<div id="further-examples" class="section level2">
+<h2>Further examples</h2>
+<p>Although the optimization method that we employ is very stable, there is one disadvantage. Because parameter signs are fixed, confidence intervals estimated from this procedure are not especially informative (since they by definition cannot cross zero).</p>
+<p>To address this problem, we also include the ode_prediction function. This function takes in parameter values and returns predictions of species abundances as a single vector. This can be useful for interfacing with other optimization functions, which can be used to produce informative confidence intervals. As an example below, we use the nls function.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#load competition data</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="kw">data</span>(<span class="st">&quot;gause_1934_science_f02_03&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#subset out data from species grown in mixture</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>mixturedat&lt;-gause_<span class="dv">1934</span>_science_f02_<span class="dv">03</span>[gause_<span class="dv">1934</span>_science_f02_<span class="dv">03</span><span class="op">$</span>Treatment<span class="op">==</span><span class="st">&quot;Mixture&quot;</span>,]</span>
+<span id="cb15-6"><a href="#cb15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#extract time and species data</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>time&lt;-mixturedat<span class="op">$</span>Day</span>
+<span id="cb15-9"><a href="#cb15-9"></a>species&lt;-<span class="kw">data.frame</span>(mixturedat<span class="op">$</span>Volume_Species1, mixturedat<span class="op">$</span>Volume_Species2)</span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="kw">colnames</span>(species)&lt;-<span class="kw">c</span>(<span class="st">&quot;P_caudatum&quot;</span>, <span class="st">&quot;P_aurelia&quot;</span>)</span>
+<span id="cb15-11"><a href="#cb15-11"></a></span>
+<span id="cb15-12"><a href="#cb15-12"></a><span class="co">#run wrapper</span></span>
+<span id="cb15-13"><a href="#cb15-13"></a>gause_out&lt;-<span class="kw">gause_wrapper</span>(<span class="dt">time=</span>time, <span class="dt">species=</span>species)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># number of species</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>N&lt;-<span class="kw">ncol</span>(gause_out<span class="op">$</span>rawdata)<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="co"># parameters</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>pars_full&lt;-<span class="kw">c</span>(gause_out<span class="op">$</span>parameter_intervals<span class="op">$</span>mu)</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="co"># data.frame for optimization</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>fittigdata&lt;-<span class="kw">data.frame</span>(<span class="dt">y=</span><span class="kw">unlist</span>(gause_out<span class="op">$</span>rawdata[,<span class="op">-</span><span class="dv">1</span>]),</span>
+<span id="cb16-7"><a href="#cb16-7"></a>                       <span class="dt">time=</span>gause_out<span class="op">$</span>rawdata<span class="op">$</span>time,</span>
+<span id="cb16-8"><a href="#cb16-8"></a>                       <span class="dt">N=</span>N)</span>
+<span id="cb16-9"><a href="#cb16-9"></a></span>
+<span id="cb16-10"><a href="#cb16-10"></a>yest&lt;-<span class="kw">ode_prediction</span>(pars_full, <span class="dt">time=</span>fittigdata<span class="op">$</span>time, <span class="dt">N=</span>fittigdata<span class="op">$</span>N)</span>
+<span id="cb16-11"><a href="#cb16-11"></a><span class="kw">plot</span>(fittigdata<span class="op">$</span>y, yest, <span class="dt">xlab=</span><span class="st">&quot;observation&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;prediction&quot;</span>)</span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="kw">abline</span>(<span class="dt">a=</span><span class="dv">0</span>, <span class="dt">b=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">#example of how to apply function, using nls()</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>mod&lt;-<span class="kw">nls</span>(y<span class="op">~</span><span class="kw">ode_prediction</span>(pars_full, time, N),</span>
+<span id="cb17-3"><a href="#cb17-3"></a>           <span class="dt">start =</span> <span class="kw">list</span>(<span class="dt">pars_full=</span>pars_full),</span>
+<span id="cb17-4"><a href="#cb17-4"></a>           <span class="dt">data=</span>fittigdata)</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="kw">summary</span>(mod)</span></code></pre></div>
+<pre><code>## 
+## Formula: y ~ ode_prediction(pars_full, time, N)
+## 
+## Parameters:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## pars_full1  0.574824   0.682966   0.842 0.405246    
+## pars_full2  4.533909   3.276244   1.384 0.174472    
+## pars_full3  1.734873   0.400458   4.332 0.000104 ***
+## pars_full4  0.810376   0.218226   3.713 0.000654 ***
+## pars_full5 -0.007675   0.002237  -3.431 0.001464 ** 
+## pars_full6 -0.010787   0.002324  -4.640 4.05e-05 ***
+## pars_full7 -0.001688   0.001048  -1.611 0.115413    
+## pars_full8 -0.005377   0.001317  -4.084 0.000220 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 10.1 on 38 degrees of freedom
+## 
+## Number of iterations to convergence: 8 
+## Achieved convergence tolerance: 3.162e-06</code></pre>
+<p>Note, however, that in some cases parameters will still lead to unbounded growth, which will crash most optimizers. Under these circumstances, users will have to be careful and creative - e.g. by setting informative priors in a Baysian analysis.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
