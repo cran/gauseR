@@ -58,5 +58,4 @@ lines(timesq, Ntest, col="red")
 }
 \concept{Gause}
 \concept{competition}
-\concept{growth}
-\concept{logistic}
+\concept{logistic growth}

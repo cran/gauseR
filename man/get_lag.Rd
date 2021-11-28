@@ -34,5 +34,4 @@ lagged_data <- get_lag(x=gause_1934_science_f02_03$Volume_Species1,
 }
 \concept{Gause}
 \concept{competition}
-\concept{lag}
-\concept{time}
+\concept{time lag}
