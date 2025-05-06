@@ -2,6 +2,7 @@
 % Please edit documentation in R/gauseR_man.R
 \docType{package}
 \name{gauseR}
+\alias{gauseR-package}
 \alias{gauseR}
 \title{gauseR: Simple methods for fitting Lotka-Volterra models describing Gause's "Struggle for Existence"}
 \source{
@@ -46,6 +47,16 @@ dni/dt = ni * (ri + aii * ni + sum_j(aij * nj))
 ?test_goodness_of_fit # tests goodness of fit of model results, with an R2-like statistic
 ?ode_prediction       # generic function for simulating time series,
                       # to be used with other optimizers
+}
+\author{
+\strong{Maintainer}: Adam Clark \email{adam.tclark@gmail.com} (\href{https://orcid.org/0000-0002-8843-3278}{ORCID})
+
+Authors:
+\itemize{
+  \item Lina Mühlbauer
+  \item Maximilienne Schulze
+}
+
 }
 \keyword{"_PACKAGE"}
 \keyword{internal}

@@ -1,6 +1,6 @@
 Package: gauseR
 Title: Lotka-Volterra Models for Gause's 'Struggle for Existence'
-Version: 1.2
+Version: 1.3
 Authors@R: c(person("Adam", "Clark", role = c("aut", "cre"),
 					email = c("adam.tclark@gmail.com"),
                     comment = c(ORCID = "0000-0002-8843-3278")),
@@ -13,12 +13,13 @@ VignetteBuilder: knitr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2023-10-22 18:10:31 UTC; aclark
-Author: Adam Clark [aut, cre] (<https://orcid.org/0000-0002-8843-3278>),
+Packaged: 2025-05-06 11:37:30 UTC; aclark
+Author: Adam Clark [aut, cre] (ORCID: <https://orcid.org/0000-0002-8843-3278>),
   Lina Mühlbauer [aut],
   Maximilienne Schulze [aut]
 Maintainer: Adam Clark <adam.tclark@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-10-22 18:30:02 UTC
+Depends: R (>= 3.5.0)
+Date/Publication: 2025-05-06 12:20:01 UTC

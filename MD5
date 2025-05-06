@@ -1,4 +1,4 @@
-f4ec24661102b905ce4a913a0c77daf1 *DESCRIPTION
+6af157547a44dd03ce6412296f5206ea *DESCRIPTION
 97c14c7e124324f6e1485af02cf90495 *NAMESPACE
 f9c4a20a6fc8ce5acdc4636a71cf7f19 *R/data.R
 8d69b06af1631bad972667ab1e960551 *R/gauseR_man.R
@@ -11,12 +11,12 @@ d0ef04cc08bff3b18033c1a53df73d1e *R/gause_wrapper.R
 659f1697124669bb1a6c676e6d3e67f6 *R/ode_prediction.R
 9079d1e574bbe35a5d891c80352d4f20 *R/percap_growth.R
 3e5ac6f7edf5a75bb40844868842424e *R/test_goodness_of_fit.R
-3c40e188e0b173d47abdccbc4f13d7e3 *build/vignette.rds
+fa4411b0616e8782fb0a9b6f1415125a *build/vignette.rds
 09fc1dee274896c34898611e6d89ff2e *data/gause_1931_AmN_f01.rda
 9b502e02d1bcf83b8d2db1afa5062ce0 *data/gause_1931_AmN_f02.rda
 a4056dd5dcc04bbed96529d687dffed6 *data/gause_1931_AmN_f03.rda
 99606a95a0746b3d67bb94611ce08057 *data/gause_1932_QR_t05.rda
-f7c098edcc66d5e71eb7c2f262817a2d *data/gause_1934_book_app_t01.rda
+e3df8fd168bf7a9d4d1513c581d37755 *data/gause_1934_book_app_t01.rda
 57e88cd63040e64ab7542ffa701389ea *data/gause_1934_book_app_t02.rda
 cb31b3f9861570f32ea5548bf634c148 *data/gause_1934_book_app_t03.rda
 dd093e07e6477516533c878e8d6fa64f *data/gause_1934_book_app_t04.rda
@@ -56,8 +56,8 @@ c34155676f3e8e85ef1ff8a56eabacf7 *data/gause_1936_AnE_f03.1.rda
 7c723a896a8f9b8704cd39fb229cb118 *data/mclaren_1994_f03.rda
 52214a4b436dd9008cc5f252da8ebac2 *inst/doc/gauseR_examples.R
 b53d6090e7bff9c304db89f37964a6ef *inst/doc/gauseR_examples.Rmd
-6c3dceb0345b7c3a136abb215d51adde *inst/doc/gauseR_examples.html
-e1390dda9c26f3a0cd5e175a5fac44a3 *man/gauseR.Rd
+d165f82b21b8a305e9787605a32fac69 *inst/doc/gauseR_examples.html
+c512186927d0001eda91e6a93892e6de *man/gauseR.Rd
 96e7e9008fa308d68315d29f5b98f876 *man/gause_1931_AmN_f01.Rd
 bb6da64fb152f2051e22c7fd6dbddfd7 *man/gause_1931_AmN_f02.Rd
 7bbe747c28283e1a31ecb2d93221cae8 *man/gause_1931_AmN_f03.Rd
